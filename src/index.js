@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "boosted/dist/css/boosted.css";
 import "boosted/dist/js/boosted";
+import { Toaster } from "react-hot-toast";
+import { BrowserRouter } from 'react-router-dom';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>
+    <Toaster position="bottom-center" />
+
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
