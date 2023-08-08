@@ -2,9 +2,11 @@ import "boosted/dist/css/boosted.css";
 import "boosted/dist/js/boosted";
 
 import { Route, Routes } from "react-router-dom";
-import Public from './layouts/public';
-import Privite from './layouts/privite';
+import Home from '../components/home';
+import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer";
 
 import React from "react";
 function App() {
@@ -22,17 +24,24 @@ function App() {
       } else {
         setUserId(user.id);
         setIsAuthenticated(!isAuthenticated);
-      } 
+      }
     }
   }, []);
   return (
     <>
-    {isAuthenticated ? (
-     <Privite />
-    ) : (
-      <Public />
-    )}
-  </>
+
+<Navbar isAuthenticated={isAuthenticated} />
+
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        
+
+
+
+      </Routes>
+      <Footer />
+
+    </>
   );
 }
 
