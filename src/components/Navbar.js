@@ -13,7 +13,7 @@ export default function Sidebar(props) {
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <div class="navbar-brand me-auto me-lg-4">
-          <a class="stretched-link" href="#">
+          <a class="stretched-link" href="/">
             <img src="/orange_logo.png" width="50" height="50" alt="Boosted - Back to Home" loading="lazy" />
 
 
@@ -26,7 +26,7 @@ export default function Sidebar(props) {
         <div class="collapse navbar-collapse align-items-end" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a className={currentHref === "http://localhost:3000/" ? "nav-link active" : "nav-link"} aria-current="page" href="/">Home</a>
+              <a className={currentHref === "http://localhost:3002/" ? "nav-link active" : "nav-link"} aria-current="page" href="/">Home</a>
             </li>
             
 

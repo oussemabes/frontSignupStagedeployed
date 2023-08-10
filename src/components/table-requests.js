@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React , {useState} from "react";
 import axios from "axios"
 
-import {
 
-    MdCheckCircleOutline
-
-} from "react-icons/md";
 import { toast } from "react-hot-toast";
 
-import { TiTick } from "react-icons/ti";
-
-import { GiCancel } from "react-icons/gi";
 
 import { TbXboxX } from "react-icons/tb";
 
 export default function TableParticipatedStudies(props) {
-    const [connectionId, setConnectionId] = useState("");
-    const [error, setError] = useState(null);
-    const [credential_definition_ids, SetCredential_definition_ids] = useState([])
 
 
 
@@ -34,6 +24,16 @@ export default function TableParticipatedStudies(props) {
 
         return normalizedDate.toDateString(); // Convert to string using .toDateString()
     }
+    const [connectionId, setConnectionId] = useState("");
+    const [error, setError] = useState("");
+
+    React.useEffect(() => {
+   
+        axios.get(`http://localhost:8041/connections`)
+        .then((res) => {       setConnectionId(res.data.results[0].connection_id)   })
+        .catch((err) => setError(err));
+
+      }, []);
 
     const accept = async (study_id, ref, id, connection_id, e) => {
 
@@ -59,20 +59,12 @@ export default function TableParticipatedStudies(props) {
                                     "schema_name": "consent schema"
                                 }
                             ]
-                        },
-                        "0_medical_ref_uuid": {
-                            "name": "medical_ref",
-                            "restrictions": [
-                                {
-                                    "schema_name": "consent schema"
-                                }
-                            ]
                         }
                     },
                     "requested_predicates": {
                         "0_consent_GE_uuid": {
-                            "name": "consent",
-                            "p_type": ">",
+                            "name": "medical_ref",
+                            "p_type": ">=",
                             "p_value": 0,
                             "restrictions": [
                                 {
@@ -84,25 +76,26 @@ export default function TableParticipatedStudies(props) {
                 }
             },
             "trace": false,
-            "connection_id": `${connection_id}`
+            "connection_id": `${connectionId}`
         }
         // Set the headers with the token
 
         e.preventDefault();
         try {
 
-            const respAgent = await axios.post(`http://localhost:8031/present-proof-2.0/send-request`, IssueCred);
+            const respAgent = await axios.post(`http://localhost:8041/present-proof-2.0/send-request`, IssueCred);
             if (respAgent) {
                 await axios.patch(`http://localhost:3004/backend/request/updateRequestState/${id}/${ref}/${study_id}`, {
                     state: "sent"
                 });
             }
-          
-
-            // Redirect after a short delay (e.g., 1 second)
             setTimeout(() => {
                 window.location.href = "/";
-            }, 1000);
+              }, 1000);
+            console.log(IssueCred)
+
+            // Redirect after a short delay (e.g., 1 second)
+       
         } catch (error) {
             if (error.response) {
                 
