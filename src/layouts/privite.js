@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer";
-
 import React from "react";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
